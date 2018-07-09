@@ -24,9 +24,9 @@ public class Equp extends Item
 				new Texture(fUri),6,4)[2][0];
 	}
 	
-	public Equp(String fIcon,String fType,EqupStatistic fStat,String fAdress,String fSet)
+	public Equp(String fName,String fIcon,String fType,EqupStatistic fStat,String fAdress,String fSet)
 	{
-		super(getIcon(fIcon));
+		super(fName,getIcon(fIcon));
 		mEqType = fType;
 		mStats = fStat;
 		mSet = fSet;

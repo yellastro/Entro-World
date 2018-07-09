@@ -38,7 +38,7 @@ public class ItemLoader
 			{
 				JSONObject qJsonItem = sJsonItems.getJSONObject(i);
 			
-				Equp qEqup = new Equp(
+				Equp qEqup = new Equp(qJsonItem.getString(kItName),
 					qJsonItem.getString(kItFile),
 					qJsonItem.getString(kItType),
 					new EqupStatistic(

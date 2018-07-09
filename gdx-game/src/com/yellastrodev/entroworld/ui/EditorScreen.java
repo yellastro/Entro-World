@@ -12,8 +12,9 @@ import java.util.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.yellastrodev.entroworld.ui.EditorScreen.*;
 import com.yellastrodev.entroworld.ui.view.*;
+import com.yellastrodev.entroworld.ui.item_editor.*;
 
-public class EditorScreen extends InputAdapter implements iScreen, Disposable
+public class EditorScreen extends iScreen implements Disposable
 {
 
 	private SpriteBatch batch;
@@ -61,6 +62,20 @@ public class EditorScreen extends InputAdapter implements iScreen, Disposable
 		
 		mViews = new ArrayList<>();
 			
+		
+			
+		mViews.add(mEditorFirstScreen);
+	}
+
+	public void openEqupList()
+	{
+		mViews.clear();
+		mViews.add(
+			new EqupMenu());
+	}
+
+	public void openTextureList()
+	{
 		mListViews = new ListView(new Runnable()
 			{
 				@Override
@@ -70,17 +85,6 @@ public class EditorScreen extends InputAdapter implements iScreen, Disposable
 						mListViews.mItemList.get(mListViews.fI));
 				}
 			},mItemss);
-			
-		mViews.add(mEditorFirstScreen);
-	}
-
-	public void openEqupList()
-	{
-		// TODO: Implement this method
-	}
-
-	public void openTextureList()
-	{
 		mViews.clear();
 		mViews.add(mListViews);
 		Gdx.input.setInputProcessor(mListViews);
@@ -94,12 +98,21 @@ public class EditorScreen extends InputAdapter implements iScreen, Disposable
 	}
 
 	@Override
+	public void resume()
+	{
+		openMainScreen();
+		super.resume();
+	}
+	
+	
+
+	@Override
 	public void dispose()
 	{
 		// TODO: Implement this method
 	}
 	
-	@Override
+	
 	public void update(float dTime)
 	{
 		batch.begin();

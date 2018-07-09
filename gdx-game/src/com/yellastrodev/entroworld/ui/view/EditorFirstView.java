@@ -34,13 +34,15 @@ public class EditorFirstView implements View
 		fButton.setSize(250,row_height);
 		fButton.addListener(new com.badlogic.gdx.scenes.scene2d.EventListener(){
 				boolean mOk=true;
+				
+				
 				@Override
 				public boolean handle(Event p1)
 				{
 					if(mOk)
 						openTextureList();
-				
-					return true;
+					
+					return false;
 				}
 			});
 		mStage.addActor(fButton);

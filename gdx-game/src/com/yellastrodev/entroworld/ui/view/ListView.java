@@ -34,7 +34,7 @@ public class ListView extends InputAdapter implements View
 		mReturn = fReturn;
 		mItemList = new ArrayList<>();
 		for(int i=0;i<fList.size();i++)
-			mItemList.add(new ListItem(this,
+			mItemList.add(new ListItem(
 				fList.get(i).mIcon,fList.get(i).mFileAdress));
 
 		mTopOver = mViewSize-(mItemSize*mItemList.size());
@@ -69,6 +69,7 @@ public class ListView extends InputAdapter implements View
 	{
 		fY = (mViewSize-mPosY)-fY;
 		fI=Math.abs(fY/mItemSize);
+		Gdx.input.setInputProcessor(null);
 		mReturn.run();
 	}
 
@@ -89,9 +90,12 @@ public class ListView extends InputAdapter implements View
 		mScrollCoef = fScrol;
 	}
 	
+	boolean isTouchedThisScreen = false;
+	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button)
 	{
+		isTouchedThisScreen = true;
 		mStartScrlY = Gdx.input.getY();
 		return super.touchDown(screenX, screenY, pointer, button);
 	}
@@ -108,10 +112,13 @@ public class ListView extends InputAdapter implements View
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button)
 	{
-
-		setPosY();
-		if(Math.abs(mStartScrlY-mScrollY)<10)
-			onPress(Gdx.input.getY());
+		if(isTouchedThisScreen)
+		{
+			setPosY();
+			if(Math.abs(mStartScrlY-mScrollY)<10)
+				onPress(Gdx.input.getY());
+		}
+		isTouchedThisScreen = false;
 		return super.touchUp(screenX, screenY, pointer, button);
 	}
 }

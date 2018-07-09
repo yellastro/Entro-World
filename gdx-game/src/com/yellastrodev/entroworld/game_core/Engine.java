@@ -15,7 +15,7 @@ import com.yellastrodev.entroworld.static_initializers.*;
 import com.yellastrodev.entroworld.game_core.entities.flowers.*;
 import com.yellastrodev.entroworld.ui.*;
 
-public class Engine extends InputAdapter implements iScreen
+public class Engine extends iScreen
 {
 	public TypedList<iSystem> mSystems = new TypedList<>();
 	public TypedList<EnEntity> mEntities = new TypedList<>();
