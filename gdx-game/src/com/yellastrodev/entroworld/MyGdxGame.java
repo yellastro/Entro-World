@@ -13,7 +13,7 @@ public class MyGdxGame implements ApplicationListener
 	SpriteBatch batch;
 
 	private WorldController worldController;
-	private iScreen mEngine = new Engine();
+	public iScreen mScreen;
 	private WorldRenderer worldRenderer;
 
 	private boolean pause;
@@ -23,8 +23,8 @@ public class MyGdxGame implements ApplicationListener
 	{
 		//texture = new Texture(Gdx.files.internal("android.jpg"));
 		batch = new SpriteBatch();
-		//((Engine)mEngine).init();
-		mEngine = new EditorScreen();
+		//((Engine)mScreen).init();
+		mScreen = new EditorScreen(null,this);
 		
 		
 		// Set Libgdx log level to DEBUG
@@ -57,7 +57,7 @@ public class MyGdxGame implements ApplicationListener
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		// Render game world to screen 
 	
-		mEngine.update(delttime);
+		mScreen.update(delttime);
 		
 		//worldRenderer.update(delttime);
 	}

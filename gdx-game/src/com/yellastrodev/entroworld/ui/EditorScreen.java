@@ -31,12 +31,13 @@ public class EditorScreen extends iScreen implements Disposable
 
 	private ListView mListViews;
 	
-	private List<View> mViews;
+	private List<View> mViews = new ArrayList<>();
 
 	private EditorFirstView mEditorFirstScreen;
 
-	public EditorScreen()
+	public EditorScreen(iScreen fPrevScreen,MyGdxGame fGame)
 	{
+		super(fPrevScreen,fGame);
 		mBackground = TextureInit.getUiBackground();
 		
 		mIconBackground = TextureInit.getUiIconBackground();
@@ -60,7 +61,7 @@ public class EditorScreen extends iScreen implements Disposable
 		
 		getTextureList();
 		
-		mViews = new ArrayList<>();
+		
 			
 		
 			
@@ -70,8 +71,9 @@ public class EditorScreen extends iScreen implements Disposable
 	public void openEqupList()
 	{
 		mViews.clear();
-		mViews.add(
-			new EqupMenu());
+		/*mViews.add(
+			new EqupMenu(this,mGame));*/
+		new EqupMenu(this,mGame);
 	}
 
 	public void openTextureList()
@@ -93,7 +95,7 @@ public class EditorScreen extends iScreen implements Disposable
 
 	public void openMainScreen()
 	{
-		mViews.clear();
+		mViews = new ArrayList<>();
 		mViews.add(mEditorFirstScreen);
 	}
 

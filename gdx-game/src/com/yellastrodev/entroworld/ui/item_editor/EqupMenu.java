@@ -1,11 +1,12 @@
 package com.yellastrodev.entroworld.ui.item_editor;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.yellastrodev.entroworld.*;
 import com.yellastrodev.entroworld.game_core.items.*;
 import com.yellastrodev.entroworld.static_initializers.*;
+import com.yellastrodev.entroworld.ui.*;
 import com.yellastrodev.entroworld.ui.view.*;
 import java.util.*;
-import com.yellastrodev.entroworld.ui.*;
 
 public class EqupMenu extends iScreen implements View
 {
@@ -13,9 +14,10 @@ public class EqupMenu extends iScreen implements View
 
 	private List<Equp> mItems;
 	
-	public EqupMenu()
+	public EqupMenu(iScreen fPrevScreen,MyGdxGame fGame)
 	{
-		Gdx.input.setCatchBackKey(true);
+		super(fPrevScreen,fGame);
+		
 		
 		mItems = ItemLoader.getEqupList();
 		
@@ -31,12 +33,15 @@ public class EqupMenu extends iScreen implements View
 			},mItems);
 		
 		Gdx.input.setInputProcessor(mListViews);
+		
 	}
 	
 	@Override
 	public void update(float dTime)
 	{
-		// TODO: Implement this method
+		mBatch.begin();
+		mListViews.drawn(mBatch);
+		mBatch.end();
 	}
 	
 

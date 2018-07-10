@@ -29,6 +29,11 @@ public class Engine extends iScreen
 	EnFactory entityFactory = new EnFactory(this);
 
 	private Chicken chic;
+	
+	public Engine(iScreen fPrevScreen,MyGdxGame fGame)
+	{
+		super(fPrevScreen,fGame);
+	}
 
 	public void removeEntiry()
 	{
