@@ -14,7 +14,7 @@ public class MyGdxGame implements ApplicationListener
 
 	private WorldController worldController;
 	public iScreen mScreen;
-	private WorldRenderer worldRenderer;
+	private sysWorldRenderer worldRenderer;
 
 	private boolean pause;
 
@@ -24,7 +24,7 @@ public class MyGdxGame implements ApplicationListener
 		//texture = new Texture(Gdx.files.internal("android.jpg"));
 		batch = new SpriteBatch();
 		//((Engine)mScreen).init();
-		mScreen = new EditorScreen(null,this);
+		mScreen = new GeneralScreen(this);
 		
 		
 		// Set Libgdx log level to DEBUG

@@ -16,14 +16,14 @@ public class SearchingState implements iStateOfProsess
 	Engine mEngine;
 	iProcessManager mManager;
 	StatisticComponent mStats;
-	PositionComp mCurrPoss;
+	PositionOnMapComponent mCurrPoss;
 	
 	EnEntity fCloserEntt;
 	
 	SearchFilter mFilter;
 	
 	public SearchingState(iProcessManager fProsM,Engine fEng,StatisticComponent fStat
-			,PositionComp fPoss,SearchFilter fFilter)
+			,PositionOnMapComponent fPoss,SearchFilter fFilter)
 	{
 		mManager=fProsM;
 		mEngine=fEng;
@@ -65,8 +65,8 @@ public class SearchingState implements iStateOfProsess
 			float fCloserRange=800;
 			for(EnEntity qEnty:fEnemies)
 			{
-				PositionComp qEnmPos = (PositionComp)qEnty
-					.getComponent(PositionComp.class);
+				PositionOnMapComponent qEnmPos = (PositionOnMapComponent)qEnty
+					.getComponent(PositionOnMapComponent.class);
 
 				float rangeX=qEnmPos.oX-mCurrPoss.oX;
 				float rangeY=qEnmPos.oY-mCurrPoss.oY;

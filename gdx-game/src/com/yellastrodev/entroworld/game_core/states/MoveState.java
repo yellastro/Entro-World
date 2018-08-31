@@ -14,8 +14,7 @@ public class MoveState implements iStateOfProsess
 		return "run";
 	}
 	
-
-	public static void getDimention(VelocityComp mVelosComp,PositionComp fTargetPos,PositionComp fCurntPos)
+	public static void getDimention(VelocityComp mVelosComp,PositionOnMapComponent fTargetPos,PositionOnMapComponent fCurntPos)
 	{
 		float rangeX=fTargetPos.oX-fCurntPos.oX;
 		float rangeY=fTargetPos.oY-fCurntPos.oY;
@@ -32,21 +31,19 @@ public class MoveState implements iStateOfProsess
 			mVelosComp.angularVel=1;
 		else
 			mVelosComp.angularVel=3;
-		
 	}
-	
 
 	iProcessManager mManager;
 	
 	StatisticComponent mStatisComp;
-	PositionComp mCurrPoss;
-	public PositionComp mTargetPoss;
+	PositionOnMapComponent mCurrPoss;
+	public PositionOnMapComponent mTargetPoss;
 	VelocityComp mVelosComp;
 	
 	iStateOfProsess nextState;
 	
 	public MoveState(iProcessManager fManag,StatisticComponent fStatic
-		,PositionComp fCurr, PositionComp fTarget,
+		,PositionOnMapComponent fCurr, PositionOnMapComponent fTarget,
 		VelocityComp fVelos,boolean isRun_NotWalk)
 		{
 			mManager=fManag;
@@ -62,40 +59,23 @@ public class MoveState implements iStateOfProsess
 	{
 		mPauseTime=2;
 	}
-		
 	
 	float mPauseTime=0;
 	@Override
 	public void Update(float deltTime)
 	{
-		/*PositionComp fCurrentPos=mcurPosition;
-		PositionComp fTargetPos=motSt.mtargetPos;*/
-
 		mPauseTime+=deltTime;
 		if(mPauseTime>1)
 		{
 			mPauseTime = 0;
 		float rangeX=mTargetPoss.oX-mCurrPoss.oX;
 		float rangeY=mTargetPoss.oY-mCurrPoss.oY;
-/*
-			if(Math.abs(rangeX)>Math.abs(rangeY))
-			{
-				if(rangeX>0)
-					mVelosComp.angularVel=4;
-				else
-					mVelosComp.angularVel=2;
-			}
-			else
-			if(rangeY>0)
-				mVelosComp.angularVel=1;
-			else
-				mVelosComp.angularVel=3;
-		*/getDimention(mVelosComp,mTargetPoss,mCurrPoss);
+
+		getDimention(mVelosComp,mTargetPoss,mCurrPoss);
 		if(Math.abs(rangeX)<mStatisComp.mRange&&
 			 Math.abs(rangeY)<mStatisComp.mRange)
 		{
 			Fin();
-					//motSt.msuperState.RunState();
 		}
 		else
 		{
@@ -110,10 +90,7 @@ public class MoveState implements iStateOfProsess
 			float Ycoef=rangeY/complxRange;
 		
 			mVelosComp.velocoX=Xcoef*speed;
-			mVelosComp.velocoY=Ycoef*speed;
-			
-			//getDimention(mVelosComp);
-				
+			mVelosComp.velocoY=Ycoef*speed;	
 		}
 		}
 	}
@@ -121,7 +98,6 @@ public class MoveState implements iStateOfProsess
 	@Override
 	public void Pause()
 	{
-
 		mVelosComp.velocoX=0;
 		mVelosComp.velocoY=0;
 	}
@@ -141,5 +117,4 @@ public class MoveState implements iStateOfProsess
 		
 		mManager.nextState();
 	}
-	
 }

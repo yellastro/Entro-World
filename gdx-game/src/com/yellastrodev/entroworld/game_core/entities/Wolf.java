@@ -6,6 +6,7 @@ import com.yellastrodev.entroworld.*;
 import com.yellastrodev.entroworld.game_core.*;
 import com.yellastrodev.entroworld.game_core.components.*;
 import com.yellastrodev.entroworld.game_core.states.state_managers.*;
+import com.yellastrodev.entroworld.game_core.states.*;
 
 public class Wolf extends Beast
 {
@@ -105,7 +106,7 @@ public class Wolf extends Beast
 	public void initLiveCicle()
 	{
 		mProcessManager.setLifeManager(
-			new PlayerController(mEngine,(MobProcessManager)mProcessManager));
+			new BeastLiveCycle((MobProcessManager)mProcessManager,this));
 	}
 	
 	

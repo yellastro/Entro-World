@@ -14,8 +14,10 @@ import com.yellastrodev.entroworld.game_core.states.state_managers.*;
 import com.yellastrodev.entroworld.static_initializers.*;
 import com.yellastrodev.entroworld.game_core.entities.flowers.*;
 import com.yellastrodev.entroworld.ui.*;
+import com.yellastrodev.entroworld.game_core.entities.mobs.humanoids.*;
+import com.yellastrodev.entroworld.map_generator.*;
 
-public class Engine extends iScreen
+public class Engine extends InputAdapter
 {
 	public TypedList<iSystem> mSystems = new TypedList<>();
 	public TypedList<EnEntity> mEntities = new TypedList<>();
@@ -29,10 +31,19 @@ public class Engine extends iScreen
 	EnFactory entityFactory = new EnFactory(this);
 
 	private Chicken chic;
+
+	private iScreen mScreen;
+
+	private iMap mMap;
+
+	private PlayerController mPlayController;
+
+	private sysWorldRenderer worldRenderer;
 	
-	public Engine(iScreen fPrevScreen,MyGdxGame fGame)
+	public Engine(iScreen fScreen)
 	{
-		super(fPrevScreen,fGame);
+		mScreen = fScreen;
+		init();
 	}
 
 	public void removeEntiry()
@@ -61,7 +72,8 @@ public class Engine extends iScreen
 			}
 		}
 		*/
-		((PlayerController)wlfState.mLifeManager).onTap(fX,fY);
+		(mPlayController).onTap(fX+worldRenderer.mCameraPosX,
+			fY+worldRenderer.mCameraPosY);
 		//.onTap(fX,fY);
 		//wlfState.mPassiveState.Update(2);
 		//wlfState.GetTarget(chic);
@@ -74,10 +86,10 @@ public class Engine extends iScreen
 	
 	public void init()
 	{
-		WorldController worldController = new WorldController();
-
-		WorldRenderer worldRenderer = new WorldRenderer(this);
+		mMap = SimpleGroundGenerator.getSimpleMap(this);
 		
+		WorldController worldController = new WorldController();
+		 worldRenderer = new sysWorldRenderer(this,mMap,0,0);
 		sysAnimations sysAnimate = new sysAnimations();
 		
 		
@@ -88,28 +100,32 @@ public class Engine extends iScreen
 		addSystem(worldRenderer,1);
 		addSystem(sysAnimate,1);
 		addSystem(new sysProsessStates(),0);
-		//addSystem(sysMotState,0);
-		//
-		//addEntity(entityFactory.createTree());
+		
+		mPlayController = new PlayerController(this);
+		
 		wlzf=new Wolf(this);
 		
 		wlfState=(MobProcessManager)
 			wlzf.mProcessManager;
 		
+		/*
 		for(PositionComp qPos:worldRenderer.mMap.mTreesPlases)
 		{
 			TreeOne qTree = new TreeOne(this);
 			qTree.mPositionComp.SetPos(qPos);
 			addEntity(qTree);
-		}
+		}*/
+		
+		for(EnEntity qEntt:mMap.mObjects)
+			addEntity(qEntt);
 			
 		for(int i=0;i<8;i++)
 		{
-			//addEntity(new TreeOne(this));
 			addEntity(new Chicken(this));
 		}
 		
 		addEntity(wlzf);
+		addEntity(new Human(this));
 		addEntity(new Chicken(this));
 		//addEntity(new Imp(this));
 		//addEntity(new Golem(this));
@@ -117,21 +133,21 @@ public class Engine extends iScreen
 		//addEntity(chic);
 		//addEntity(entityFactory.createSkelet());
 		
-		worldRenderer.sortByLvl();
+		worldRenderer.sortByOutOfDisplay();
 		//addEntity(entityFactory.createGolem());
 	}
 	
 	public void addEntity(EnEntity Enntity)
 	{
-		PositionComp posc=null;
+		PositionOnMapComponent posc=null;
 		DisplayComp disc=null;
 		VelocityComp velc=null;
 		AnimateComponent anic=null;
 		mEntities.add( Enntity );
 		for(Object comp:Enntity.Components)
 		{
-			if (comp.getClass()==PositionComp.class)
-				posc=(PositionComp)comp;
+			if (comp.getClass()==PositionOnMapComponent.class)
+				posc=(PositionOnMapComponent)comp;
 			if (comp.getClass()==DisplayComp.class)
 				disc=(DisplayComp)comp;
 			if (comp.getClass()==VelocityComp.class)
@@ -154,7 +170,7 @@ public class Engine extends iScreen
 		{
 			DisplayNode dNode= new DisplayNode(disc,posc,Enntity.mStatistic);
 			
-			iSystem ss=mSystems.get(WorldRenderer.class);
+			iSystem ss=mSystems.get(sysWorldRenderer.class);
 			ss.addNode(dNode);
 			Enntity.mNodes.add(dNode);
 		}
@@ -199,7 +215,7 @@ public class Engine extends iScreen
 		Object ds;
 		if((ds=Enntity.mNodes.get(DisplayNode.class))!=null)
 		{
-			iSystem ss=mSystems.get(WorldRenderer.class);
+			iSystem ss=mSystems.get(sysWorldRenderer.class);
 			ss.deleteNode(ds);
 		}
 		if((ds=Enntity.mNodes.get(MovedNode.class))!=null)
@@ -257,7 +273,7 @@ public class Engine extends iScreen
 		if(wlfState.mTargetPoss!=null)
 		{
 			
-			PositionComp fVelc = wlfState.mTargetPoss;
+			PositionOnMapComponent fVelc = wlfState.mTargetPoss;
 			info =wlfState.mEntity.toString();//+" t="+fVelc.targetPos.oX+"/"+fVelc.targetPos.oY;
 			}//wlfState.getActiveState().getClass().toString().substring(50)
 		/*StatisticComponent fChStat=(StatisticComponent)
@@ -288,5 +304,13 @@ public class Engine extends iScreen
        FontRed1.draw(batch, info2, 10, 50);
         
     }
+
+	@Override
+	public boolean keyDown(int keycode)
+	{
+		mScreen.keyDown(keycode);
+		return super.keyDown(keycode);
+	}
+	
 	
 }

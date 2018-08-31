@@ -43,7 +43,7 @@ public abstract class Mob extends EnEntity
 	{
 		StatisticComponent stc=getStatistics();
 		addComponent(stc);
-		mPositionComp = PositionComp.setNewPos();
+		mPositionComp = PositionOnMapComponent.setNewPos();
 		addComponent(mPositionComp);
 		DisplayComp fdispComp=new DisplayComp
 					 (fStore.mStores.get(0).mStandAnimation.rightAnimation.getKeyFrame(0,false)
@@ -83,9 +83,9 @@ public abstract class Mob extends EnEntity
 		mAnimateNode = aNode;
 	}
 	
-	private PositionComp setNewPos()
+	private PositionOnMapComponent setNewPos()
 	{
-		PositionComp posComp=new PositionComp(
+		PositionOnMapComponent posComp=new PositionOnMapComponent(
 			MathUtils.random(-2.0f, 400.0f),
 			MathUtils.random(-2.0f, 600.0f));//MathUtils.random(-2.0f, 600.0f);
 		posComp.rotation=0;

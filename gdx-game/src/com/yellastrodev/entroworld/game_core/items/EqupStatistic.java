@@ -8,11 +8,25 @@ public class EqupStatistic
 	
 	public EqupStatistic(String fArmor)
 	{
-		mArmor = Integer.parseInt(fArmor);
+		try{
+			mArmor = Integer.parseInt(fArmor);
+		}
+		catch(NumberFormatException e)
+		{
+			mArmor = 0;
+		}
+		
 	}
 	
 	public EqupStatistic(String fDamage,String fAtSp)
 	{
-		mDamage = Integer.parseInt(fDamage);
+		try
+		{
+			mDamage = Integer.parseInt(fDamage);
+		}
+		catch(NumberFormatException e)
+		{
+			mDamage = 0;
+		}
 	}
 }

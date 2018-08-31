@@ -24,12 +24,35 @@ public class Equp extends Item
 				new Texture(fUri),6,4)[2][0];
 	}
 	
+	public static AnimationStore getAnim(String fUri)
+	{
+		AnimationStore fAnim =  new AnimationStore();
+		
+		if(fUri.contains("fullsheet"))
+		{
+			fUri = fUri.substring(fUri.indexOf("fullsheet")+9);
+			fUri = fUri.substring(0,fUri.lastIndexOf(".png"));
+			fAnim = AnimationInitializer.getLPCFullCicleAnimFromSingleSheet(fUri);
+			
+		}
+		else
+		{
+			fUri = fUri.substring(fUri.lastIndexOf("/")+1);
+			fUri = fUri.substring(0,fUri.lastIndexOf(".png"));
+			fAnim = AnimationInitializer.getLPCFullCicleAnimFromPieaces(fUri);
+			
+		}
+		return fAnim;
+	}
+	
 	public Equp(String fName,String fIcon,String fType,EqupStatistic fStat,String fAdress,String fSet)
 	{
 		super(fName,getIcon(fIcon));
 		mEqType = fType;
 		mStats = fStat;
 		mSet = fSet;
+		mAnimStore = getAnim(fIcon);
+		
 		//mAnimStore = AnimationInitializer.g
 	}
 }

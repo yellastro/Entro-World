@@ -46,6 +46,7 @@ public abstract class iScreen extends InputAdapter
 		Gdx.input.setInputProcessor(null);
 		Gdx.input.setCatchBackKey(false);
 		mPreviousScreen.resume();
-		mBatch.dispose();
+		
+		//mBatch.dispose();
 	}
 }

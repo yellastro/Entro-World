@@ -5,23 +5,29 @@ import com.yellastrodev.entroworld.static_initializers.*;
 import com.yellastrodev.entroworld.game_core.components.*;
 import java.util.*;
 import com.badlogic.gdx.math.*;
+import com.yellastrodev.entroworld.game_core.entities.flowers.*;
+import com.yellastrodev.entroworld.game_core.*;
 
 public class SimpleGroundGenerator
 {
 	public TextureRegion mGround[][];
-	int x=100;
-	int y=60;
+	static int x=100;
+	static int y=60;
 	int fH;
 	int fW;
-	public List<PositionComp> mTreesPlases = new ArrayList<>();
 	
-	public SimpleGroundGenerator()
+
+	static private Engine mEngine;
+	
+	public static iMap getSimpleMap(Engine fEng)
 	{
-		mGround = new TextureRegion[x][y];
+		mEngine = fEng;
+		
+		iMap fMap = new iMap(y,x);
 		
 		TextureRegion fTxt = TextureInit.getSomeGrass();
-		fW = fTxt.getRegionWidth();
-		fH = fTxt.getRegionHeight();
+		fMap.mCellWidth = fTxt.getRegionWidth();
+		fMap.mCellHeigth = fTxt.getRegionHeight();
 		/*
 		mGround.setRegionHeight(fH*x);
 		mGround.setRegionWidth(fW*y);
@@ -30,30 +36,34 @@ public class SimpleGroundGenerator
 		{
 			for(int j=0;j<y;j++)
 			{
-				fTxt = TextureInit.getSomeGrass();
+				//fTxt = TextureInit.getSomeGrass();
 				
-				mGround[i][j] = fTxt;
+				fMap.mGround[j][i] = fTxt;
 				/*.setRegion(fTxt,
 					fH*j,fW*i,fH,fW);*/
 			}
 		}
-		GenerateTrees();
+		GenerateTrees(fMap);
+		return fMap;
 	}
 	
-	private void GenerateTrees()
+	private static void GenerateTrees(iMap fMap)
 	{
+		List<PositionOnMapComponent> mTreesPlases = new ArrayList<>();
+		boolean qNotOk=false;
 		for(int i=0;i<7;i++)
 		{
-			PositionComp qPos;
-			boolean qNotOk=false;
+			PositionOnMapComponent qPos;
+			
 			int k=0;
 			
 			do{
+				qNotOk=false;
 				k++;
 				if(k>20)
 					return;
-				qPos = PositionComp.setNewPos();
-				for(PositionComp qqPos:mTreesPlases)
+				qPos = PositionOnMapComponent.setNewPos();
+				for(PositionOnMapComponent qqPos:mTreesPlases)
 				{
 					if(Math.abs(qqPos.oX-qPos.oX)<20 &&
 						Math.abs(qqPos.oX-qPos.oX)<20)
@@ -62,10 +72,16 @@ public class SimpleGroundGenerator
 						break;
 					}
 				}
-			}
-			while(qNotOk);
+			} while(qNotOk);
 			mTreesPlases.add(qPos);
 		}
+		for(PositionOnMapComponent qPos:mTreesPlases)
+		{
+			TreeOne qTree = new TreeOne(mEngine);
+			qTree.mPositionComp.SetPos(qPos);
+			fMap.mObjects.add(qTree);
+		}
+		
 	}
 	
 	public void draw(Batch fBatch)

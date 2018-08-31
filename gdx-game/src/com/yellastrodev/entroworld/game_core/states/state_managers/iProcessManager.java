@@ -13,8 +13,8 @@ public abstract class iProcessManager
 	public Engine mEngine;
 	
 	public StatisticComponent mStatisComp;
-	public PositionComp mCurrPoss;
-	public PositionComp mTargetPoss;
+	public PositionOnMapComponent mCurrPoss;
+	public PositionOnMapComponent mTargetPoss;
 	public VelocityComp mVelosComp;
 	public AnimateComponent mAnimationComponent;
 	public AnimationNode mAnimationNode;
@@ -40,7 +40,7 @@ public abstract class iProcessManager
 	
 	public abstract void GetTarget(EnEntity fEntity)
 	
-	public abstract void RunThere(PositionComp fPos)
+	public abstract void RunThere(PositionOnMapComponent fPos)
 	
 	public abstract void Stay()
 

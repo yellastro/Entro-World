@@ -27,7 +27,7 @@ public class ProsessStateManager extends iProcessManager
 	{
 		mAnimationNode = (AnimationNode)fNode;
 		mStatisComp=mEntity.mStatistic;
-		mCurrPoss=(PositionComp)mEntity.getComponent(PositionComp.class);
+		mCurrPoss=(PositionOnMapComponent)mEntity.getComponent(PositionOnMapComponent.class);
 		mVelosComp=(VelocityComp)mEntity.getComponent(VelocityComp.class);
 		mAnimationComponent=(AnimateComponent)mEntity.getComponent(AnimateComponent.class);
 	}
@@ -65,14 +65,14 @@ public class ProsessStateManager extends iProcessManager
 	
 	public void GetTarget(EnEntity fTarget)
 	{
-		mTargetPoss=(PositionComp)fTarget
-			.getComponent(PositionComp.class);
+		mTargetPoss=(PositionOnMapComponent)fTarget
+			.getComponent(PositionOnMapComponent.class);
 		setActiveState(getAtackState
 			(fTarget.mProcessManager));
 		isSearch=false;
 	}
 	
-	public void RunThere(PositionComp fTargetPos)
+	public void RunThere(PositionOnMapComponent fTargetPos)
 	{
 		mTargetPoss=fTargetPos;
 		//mTargetPoss.oX=MathUtils.random(-2.0f, 400.0f);
@@ -88,7 +88,7 @@ public class ProsessStateManager extends iProcessManager
 		mLiveManager.kill();
 	}
 	
-	public void WalkThere(PositionComp fTargetPos)
+	public void WalkThere(PositionOnMapComponent fTargetPos)
 	{
 		mTargetPoss=fTargetPos;
 		//mTargetPoss.oX=MathUtils.random(-2.0f, 400.0f);
@@ -117,14 +117,14 @@ public class ProsessStateManager extends iProcessManager
 	
 	public void WalkAround()
 	{
-		mTargetPoss=PositionComp.setNewPos();
+		mTargetPoss=PositionOnMapComponent.setNewPos();
 
 		WalkThere(mTargetPoss);
 	}
 	
 	public void runAway()
 	{
-		mTargetPoss=PositionComp.setNewPos();
+		mTargetPoss=PositionOnMapComponent.setNewPos();
 
 		RunThere(mTargetPoss);
 	}
@@ -145,7 +145,7 @@ public class ProsessStateManager extends iProcessManager
 			return true;
 		}
 		
-		if(mTargetPoss!=(fAtacker.Components.get(PositionComp.class)))
+		if(mTargetPoss!=(fAtacker.Components.get(PositionOnMapComponent.class)))
 			
 			if(fAtacker.mStatistic.mHP<mStatisComp.mHP*3)
 				GetTarget(fAtacker);

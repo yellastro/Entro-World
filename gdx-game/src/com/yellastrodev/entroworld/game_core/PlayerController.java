@@ -1,21 +1,31 @@
 package com.yellastrodev.entroworld.game_core;
-import com.yellastrodev.entroworld.game_core.states.*;
+import com.badlogic.gdx.*;
 import com.yellastrodev.entroworld.game_core.components.*;
 import com.yellastrodev.entroworld.game_core.entities.*;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.*;
+import com.yellastrodev.entroworld.game_core.entities.mobs.humanoids.*;
 import com.yellastrodev.entroworld.game_core.states.life_cycles.*;
 import com.yellastrodev.entroworld.game_core.states.state_managers.*;
+import com.yellastrodev.entroworld.game_core.systems.*;
+import com.yellastrodev.entroworld.game_core.entities.elemnetals.*;
 
 public class PlayerController implements iLifeCycle
 {
 	private Engine mEngine;
 	private MobProcessManager mProcessor;
+
+	private Mob mUnit;
+
+	private sysWorldRenderer mRenderSyst;
 	
-	public PlayerController(Engine fEngine,MobProcessManager fProcessor)
+	public PlayerController(Engine fEngine)
 	{
-		mProcessor = fProcessor;
+		mUnit = new Messy(fEngine);
+		mProcessor = (MobProcessManager)mUnit.mProcessManager;
+		mProcessor.setLifeManager(this);
+		fEngine.addEntity(mUnit);
 		mEngine = fEngine;
+		mRenderSyst = (sysWorldRenderer)mEngine.mSystems.get(sysWorldRenderer.class);
+		mRenderSyst.mPlayerPos = mProcessor.mCurrPoss;
 	}
 	
 	public void update(float dTime)
@@ -58,7 +68,7 @@ public class PlayerController implements iLifeCycle
 	private void RunTo(float oX,float oY)
 	{
 		mProcessor.RunThere(
-			new PositionComp(oX,oY));
+			new PositionOnMapComponent(oX,oY));
 	}
 	
 	@Override

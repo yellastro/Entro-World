@@ -12,6 +12,8 @@ public class EqupMenu extends iScreen implements View
 {
 	private ListEqups mListViews;
 
+	InputMultiplexer multiplexer = new InputMultiplexer();
+	
 	private List<Equp> mItems;
 	
 	public EqupMenu(iScreen fPrevScreen,MyGdxGame fGame)
@@ -31,8 +33,11 @@ public class EqupMenu extends iScreen implements View
 						mListViews.mItemList.get(mListViews.fI));
 				*/}
 			},mItems);
+			
+		multiplexer.addProcessor( mListViews );
+		multiplexer.addProcessor( this );
 		
-		Gdx.input.setInputProcessor(mListViews);
+		Gdx.input.setInputProcessor(multiplexer);
 		
 	}
 	

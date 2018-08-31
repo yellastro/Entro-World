@@ -7,7 +7,7 @@ import com.yellastrodev.entroworld.game_core.states.state_managers.*;
 public class BulletFly extends MoveState
 {
 	public BulletFly(iProcessManager fManag,StatisticComponent fStatic
-					 ,PositionComp fCurr, PositionComp fTarget,
+					 ,PositionOnMapComponent fCurr, PositionOnMapComponent fTarget,
 					 VelocityComp fVelos)
 	{
 		super(fManag,fStatic,fCurr,fTarget,fVelos,true);

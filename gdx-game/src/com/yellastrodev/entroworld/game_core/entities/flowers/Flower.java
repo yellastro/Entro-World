@@ -20,7 +20,7 @@ public abstract class Flower extends EnEntity
 	{
 		StatisticComponent stc=getStatistics();
 		addComponent(stc);
-		mPositionComp = PositionComp.setNewPos();
+		mPositionComp = PositionOnMapComponent.setNewPos();
 		addComponent(mPositionComp);
 		DisplayComp fdispComp=initDisplayComp(fScale);
 		addComponent(fdispComp);

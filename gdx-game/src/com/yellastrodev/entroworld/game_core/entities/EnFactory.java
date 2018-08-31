@@ -96,9 +96,9 @@ public class EnFactory
 		return fWolf;
 	}
 	
-	private PositionComp setNewPos()
+	private PositionOnMapComponent setNewPos()
 	{
-		PositionComp posComp=new PositionComp(
+		PositionOnMapComponent posComp=new PositionOnMapComponent(
 		MathUtils.random(-2.0f, 400.0f),
 		MathUtils.random(-2.0f, 600.0f));//MathUtils.random(-2.0f, 600.0f);
 		posComp.rotation=0;

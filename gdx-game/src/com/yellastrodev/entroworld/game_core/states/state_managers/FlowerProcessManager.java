@@ -40,7 +40,7 @@ public class FlowerProcessManager extends iProcessManager
 	}
 
 	@Override
-	public void RunThere(PositionComp fPos)
+	public void RunThere(PositionOnMapComponent fPos)
 	{
 		// TODO: Implement this method
 	}

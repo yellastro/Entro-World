@@ -4,9 +4,9 @@ import com.yellastrodev.entroworld.game_core.components.*;
 public class MovedNode
 {
 	public VelocityComp mVelocityComp;
-	public PositionComp mPositionComp;
+	public PositionOnMapComponent mPositionComp;
 	
-	public MovedNode(VelocityComp vel, PositionComp pos)
+	public MovedNode(VelocityComp vel, PositionOnMapComponent pos)
 	{
 		mVelocityComp=vel;
 		mPositionComp=pos;

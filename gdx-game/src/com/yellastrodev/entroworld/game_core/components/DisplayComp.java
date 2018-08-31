@@ -10,6 +10,12 @@ public class DisplayComp
 
 	public float mScale;
 	
+	public float mHeigth;
+	public float mWidth;
+	
+	public int mPointX;
+	public int mPointY;
+	
 	public float mRotate = 0;
 	
 	public DisplayComp(Texture txtr)
@@ -21,5 +27,9 @@ public class DisplayComp
 	{
 		mSprite.add(fReg);
 		mScale = fScale;
+		mHeigth = (fReg.getRegionHeight()*mScale);
+		mWidth = (fReg.getRegionWidth()*mScale);
+		mPointX =(int) mWidth/2;
+		mPointY = (int) mHeigth/5;
 	}
 }

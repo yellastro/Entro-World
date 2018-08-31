@@ -14,7 +14,7 @@ abstract public class EnEntity
 	public Engine mEngine;
 	public iProcessManager mProcessManager;
 	public StatisticComponent mStatistic;
-	public PositionComp mPositionComp;
+	public PositionOnMapComponent mPositionComp;
 	
 	public TypedList mNodes=new TypedList();
 	public iAnimationNode mAnimateNode;

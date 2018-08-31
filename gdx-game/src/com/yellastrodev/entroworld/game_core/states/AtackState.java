@@ -27,12 +27,12 @@ public class AtackState implements iStateOfProsess
 
 	private iProcessManager mManager;
 	private StatisticComponent mStatisComp;
-	public PositionComp mTargetPoss;
-	private PositionComp mCurrPoss;
+	public PositionOnMapComponent mTargetPoss;
+	private PositionOnMapComponent mCurrPoss;
 	public iProcessManager mTargetManager;
 	
 	public AtackState(iProcessManager fManag,StatisticComponent fStatic
-		,PositionComp fCurr, PositionComp fTarget,iProcessManager targetManager)
+		,PositionOnMapComponent fCurr, PositionOnMapComponent fTarget,iProcessManager targetManager)
 	{
 		mManager=fManag;
 		mStatisComp=fStatic;

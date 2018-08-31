@@ -29,8 +29,11 @@ public class ListView extends InputAdapter implements View
 	public TextureRegion mIconBackground;
 	public TextureRegion mBody;
 
-	public ListView(Runnable fReturn,List<IconAndName> fList)
+	private iScreen mScreen;
+
+	public ListView(iScreen fScreen,Runnable fReturn,List<IconAndName> fList)
 	{
+		mScreen =  fScreen;
 		mReturn = fReturn;
 		mItemList = new ArrayList<>();
 		for(int i=0;i<fList.size();i++)
@@ -121,4 +124,13 @@ public class ListView extends InputAdapter implements View
 		isTouchedThisScreen = false;
 		return super.touchUp(screenX, screenY, pointer, button);
 	}
+
+	@Override
+	public boolean keyDown(int keycode)
+	{
+		mScreen.keyDown(keycode);
+		return super.keyDown(keycode);
+	}
+	
+	
 }

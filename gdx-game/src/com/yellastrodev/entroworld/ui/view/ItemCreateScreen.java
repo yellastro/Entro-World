@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.yellastrodev.entroworld.static_initializers.*;
 import com.yellastrodev.entroworld.ui.*;
+import com.yellastrodev.entroworld.*;
 
-public class ItemCreateScreen implements View
+public class ItemCreateScreen extends iScreen
 {
-	
 	java.util.List<TextField> mTextFields = new ArrayList<>();
 	
 	final TextField TextField1;
@@ -33,12 +33,19 @@ public class ItemCreateScreen implements View
 
 	private EditorScreen mScreen;
 	
-	public ItemCreateScreen(ListItem fItem,EditorScreen fScreen)
+	public ItemCreateScreen(ListItem fItem,EditorScreen fScreen,MyGdxGame fGame)
 	{
+		super(fScreen,fGame);
 		//Skin skin = new Skin();
 		mScreen = fScreen;
 		mItem = fItem;
 		mStage = new Stage();
+		
+		Image fImg = new Image();
+		fImg.setDrawable(new TextureRegionDrawable(mItem.mIcon));
+		fImg.setPosition(290,600);
+		
+		mStage.addActor(fImg);
 		
 		List.ListStyle fSekStyle =new List.ListStyle();
 		fSekStyle.font = new BitmapFont();
@@ -134,20 +141,12 @@ public class ItemCreateScreen implements View
 			fArm,fDmg,fSet);
 		
 	}
-
+	
 	@Override
-	public void drawn(SpriteBatch fBatch)
+	public void update(float dTime)
 	{
-		mItem.drawn(fBatch,290,400);
+		//mItem.drawn(fBatch,290,400);
 		mStage.draw();
 		mStage.act();
-		//TextField1.draw(fBatch,255f);
-		//mTextFields.get(0).draw(fBatch,255);
 	}
-	
-	private void finish()
-	{
-		mScreen.openMainScreen();
-	}
-	
 }

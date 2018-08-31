@@ -22,13 +22,8 @@ public class Golem extends Mob
 			AnimationInitializer.getGolemAnimStore());
 		
 		return fStore;
+
 	}
-
-
-	
-
-
-	
 	
 	@Override
 	public Class getEnemy()

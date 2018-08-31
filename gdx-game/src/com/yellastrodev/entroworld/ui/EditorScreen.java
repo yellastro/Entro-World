@@ -50,7 +50,7 @@ public class EditorScreen extends iScreen implements Disposable
 		camera.position.set(0, 0, 0);
 		camera.update();
 		
-		mEditorFirstScreen = new EditorFirstView(this);
+		//mEditorFirstScreen = new EditorFirstView(this);
 		
 		mBody =
 		AnimationInitializer.getTextureArray(
@@ -61,24 +61,18 @@ public class EditorScreen extends iScreen implements Disposable
 		
 		getTextureList();
 		
-		
+		openTextureList();
 			
 		
 			
-		mViews.add(mEditorFirstScreen);
+		//mViews.add(mEditorFirstScreen);
 	}
 
-	public void openEqupList()
-	{
-		mViews.clear();
-		/*mViews.add(
-			new EqupMenu(this,mGame));*/
-		new EqupMenu(this,mGame);
-	}
+	
 
 	public void openTextureList()
 	{
-		mListViews = new ListView(new Runnable()
+		mListViews = new ListView(this,new Runnable()
 			{
 				@Override
 				public void run()
@@ -93,20 +87,15 @@ public class EditorScreen extends iScreen implements Disposable
 		
 	}
 
-	public void openMainScreen()
-	{
-		mViews = new ArrayList<>();
-		mViews.add(mEditorFirstScreen);
-	}
-
 	@Override
 	public void resume()
 	{
-		openMainScreen();
 		super.resume();
+		Gdx.input.setInputProcessor(mListViews);
 	}
 	
 	
+
 
 	@Override
 	public void dispose()
@@ -184,8 +173,8 @@ public class EditorScreen extends iScreen implements Disposable
 	
 	public void openItemCreator(ListItem fItem)
 	{
-		mViews.remove(mListViews);
+		//mViews.remove(mListViews);
 		//Gdx.input.setInputProcessor(null);
-		mViews.add(new ItemCreateScreen(fItem,this));
+		new ItemCreateScreen(fItem,this,mGame);
 	}
 }

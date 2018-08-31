@@ -19,9 +19,9 @@ public class FireBall extends Effect
 	}
 	
 
-	PositionComp mStartPos;
+	PositionOnMapComponent mStartPos;
 	
-	public FireBall(Engine fEng,PositionComp fPoss)
+	public FireBall(Engine fEng,PositionOnMapComponent fPoss)
 	{
 		super(fEng);
 		//mStartPos = new PositionComp();
@@ -44,7 +44,7 @@ public class FireBall extends Effect
 		VelocityComp velcom=new VelocityComp();
 		addComponent(velcom);
 		//mStartPos = new PositionComp();
-		addComponent(PositionComp.setNewPos());
+		addComponent(PositionOnMapComponent.setNewPos());
 		
 
 		/*

@@ -15,36 +15,28 @@ public class AnimationInitializer
 
 	private static AnimationStore mSwordAnimation;
 	public static AnimationStore getHeadChainArmor()
-	{/*
-		AnimationStore animStore=new AnimationStore();
-		TextureRegion[][] walkTextures=getRegion(new Texture(Gdx.files.internal("lpc/walkcycle/HEAD_chain_armor_helmet.png"))
-												 ,9,4,0);
-		AnimateComponent run=getLpcComponent(walkTextures,9);
-
-		Texture ftxt=
-		new Texture(Gdx.files.internal("lpc/walkcycle/HEAD_chain_armor_helmet.png"));
-		
-
-		int flength=6;
-
-		//Texture ftexture=new Texture(Gdx.files.internal("lpc/slash/BODY_skeleton.png"));
-
-
-		walkTextures=getRegion(new Texture(Gdx.files.internal("lpc/slash/HEAD_chain_armor_helmet.png"))
-							   ,flength,4,0);
-
-		AnimateComponent atack=getLpcComponent(walkTextures,flength);
-
-
-		animStore.mRunAnimation=run;
-		animStore.mStandAnimation=run;
-		animStore.mAtackAnimation=atack;
-
-
-		
-		return animStore;*/
-		
+	{
 		return getLPCFullCicleAnimFromPieaces("HEAD_chain_armor_helmet");
+	}
+	
+	public static AnimationStore getLPCFullCicleAnimFromSingleSheet(String fRes)
+	{
+		AnimationStore animStore=new AnimationStore();
+
+		TextureRegion[][] fTextureR = getTextureArray(new Texture(Gdx.files.internal("lpc/fullsheet/"+fRes+".png")),13,21);
+		
+		float fDuration = 0.08f;
+
+		animStore.mRunAnimation 
+				= getSingleLPCAnimation(fTextureR,
+									9,8,fDuration,true);
+		animStore.mStandAnimation = getSingleLPCAnimation(fTextureR,
+									1,8,1,true);
+		animStore.mAtackAnimation=getSingleLPCAnimation(fTextureR,
+									6,12,fDuration,false);
+
+		//mSkeletAnimation=animStore;
+		return animStore;
 	}
 	
 	public static AnimationStore getLPCFullCicleAnimFromPieaces(String fRes)
@@ -102,6 +94,19 @@ public class AnimationInitializer
 		return fanimStore;
 	}
 	
+	public static AnimateComponent getSingleLPCAnimationInCount(String fResurseFile,int fCount,int fDCount,double fFDuration,boolean isCycler)
+	{
+		TextureRegion[][] fAtackTextures;
+
+		fAtackTextures=getRegion(new Texture(Gdx.files.internal("lpc/"+fResurseFile+".png"))
+								 ,fDCount,4,0);
+		AnimateComponent fComponent = getLpcComponent(fAtackTextures,fCount);
+		fComponent.isCycler=isCycler;
+		fComponent.mAnimCount=fCount;
+		fComponent.mFrameDuration=fFDuration;
+		return fComponent;
+	}
+	
 	public static AnimateComponent getSingleLPCAnimation(String fResurseFile,int fCount,double fFDuration,boolean isCycler)
 	{
 		TextureRegion[][] fAtackTextures;
@@ -115,40 +120,61 @@ public class AnimationInitializer
 		return fComponent;
 	}
 	
+	public static AnimateComponent getSingleLPCAnimation(TextureRegion[][] fResurseFile,int fCount,int fLvl,double fFDuration,boolean isCycler)
+	{
+		AnimateComponent fComponent = getLpcComponent(fResurseFile,fLvl,fCount);
+		fComponent.isCycler=isCycler;
+		fComponent.mAnimCount=fCount;
+		fComponent.mFrameDuration=fFDuration;
+		return fComponent;
+	}
+	
+	
+	
 	public static AnimateComponent getStandLPCAnimation(String fResurseFile)
 	{
-		TextureRegion[][] fAtackTextures;
 		int flength=1;
 
-		return getSingleLPCAnimation(("walkcycle/"+fResurseFile),
-									 flength,1,true);
+		return getSingleLPCAnimationInCount(("equp/walkcycle/"+fResurseFile),
+			flength,9,1,true);
 	}
 	
 	public static AnimateComponent getWalkLPCAnimation(String fResurseFile)
 	{
-		TextureRegion[][] fAtackTextures;
 		int flength=9;
 
-		return getSingleLPCAnimation(("walkcycle/"+fResurseFile),
+		return getSingleLPCAnimation(("equp/walkcycle/"+fResurseFile),
 			flength,0.08,true);
 	}
 	
 	public static AnimateComponent getAtack6xAnimation(String fResurseFile)
 	{
-		//TextureRegion[][] fAtackTextures;
 		int flength=6;
 
-		return getSingleLPCAnimation(("slash/"+fResurseFile),
+		return getSingleLPCAnimation(("equp/slash/"+fResurseFile),
 			flength,0.08,false);
-		
-		/* ---это работает---
-		fAtackTextures=getRegion(new Texture(Gdx.files.internal("lpc/slash/"+fResurseFile+".png"))
-			,flength,4,0);
-		AnimateComponent fComponent = getLpcComponent(fAtackTextures,flength);
-		fComponent.isntCycler=true;
-		fComponent.mAnimCount=flength;
-		fComponent.mFrameDuration=1/5;
-		return fComponent;*/
+	}
+	
+	public static AnimateComponent getLpcComponent(TextureRegion[][] fTextures,int fLvl,int fALeng)
+	{
+		AnimateComponent fComp=new AnimateComponent();
+		fComp.topAnimation=getAnimationFromLevel(fTextures,fLvl,fALeng);
+		fComp.leftAnimation=getAnimationFromLevel(fTextures,fLvl+1,fALeng);
+		fComp.botAnimation=getAnimationFromLevel(fTextures,fLvl+2,fALeng);
+		fComp.rightAnimation=getAnimationFromLevel(fTextures,fLvl+3,fALeng);
+
+		return fComp;
+	}
+	
+	public static AnimateComponent getMessyComponent(TextureRegion[][] fTextures,int fALeng)
+	{
+		AnimateComponent fComp=new AnimateComponent();
+		fComp.topAnimation=getAnimationFromLevel(fTextures,1,fALeng);
+		fComp.leftAnimation=getAnimationFromLevel(fTextures,1,fALeng);
+		fComp.botAnimation=getAnimationFromLevel(fTextures,0,fALeng);
+		fComp.rightAnimation=getAnimationFromLevel(fTextures,0,fALeng);
+
+		return fComp;
 	}
 	
 	public static AnimateComponent getLpcComponent(TextureRegion[][] fTextures,int fALeng)
@@ -160,6 +186,71 @@ public class AnimationInitializer
 		fComp.rightAnimation=getAnimationFromLevel(fTextures,3,fALeng);
 		
 		return fComp;
+	}
+	
+	public static AnimationStore getMessyAnimStore()
+	{
+		/*if(!(mGolemAnimation==null))
+			return mGolemAnimation;
+		*/
+		int fLeng = 7;
+
+		AnimationStore animStore=new AnimationStore();
+		TextureRegion[][] profTextures=getRegion(new Texture(Gdx.files.internal("mobs/messy/messy_walk.png"))
+												 ,fLeng,2,0);
+
+		AnimateComponent run=getMessyComponent(profTextures,fLeng);
+		run.mFrameDuration = 0.088;
+		run.mAnimCount = fLeng;
+		run.isCycler = true;
+		
+		profTextures=getRegion(new Texture(Gdx.files.internal("mobs/messy/messy_stand.png"))
+							   ,fLeng,2,0);
+
+		AnimateComponent stand=getMessyComponent(profTextures,fLeng);
+		stand.mFrameDuration = 0.088;
+		stand.mAnimCount = fLeng;
+		stand.isCycler = true;
+		 
+		Texture fTexture = new Texture(Gdx.files.internal("mobs/messy/messy_startexplode.png"));
+		TextureRegion[][] tmp = TextureRegion.split(fTexture, 
+							fTexture.getWidth() / 9, fTexture.getHeight());
+		Texture fTexture2 = new Texture(Gdx.files.internal("mobs/messy/messy_explode.png"));
+		TextureRegion[][] tmp2 = TextureRegion.split(fTexture2, 
+													fTexture2.getWidth() / 5, fTexture2.getHeight());
+		TextureRegion[] walkFrames = new TextureRegion[14];
+		for (int i = 0; i < 9; i++) 
+            walkFrames[i] = tmp[0][i];
+		for (int i = 0; i < 5; i++) 
+            walkFrames[i+9] = tmp2[0][i];
+
+        Animation explodeAnimation = new Animation(0.085f, walkFrames); // #11
+		
+		AnimateComponent fComp=new AnimateComponent();
+		fComp.topAnimation=explodeAnimation;
+		fComp.leftAnimation=explodeAnimation;
+		fComp.botAnimation=explodeAnimation;
+		fComp.rightAnimation=explodeAnimation;
+		
+	/*TextureRegion[][] eatSprite=getRegion(new Texture(Gdx.files.internal("mobs/golem/golem-atk.png"))
+											  ,7,4,0);
+		*/
+		AnimateComponent attack=fComp;
+		attack.mFrameDuration = 0.08;
+		attack.mAnimCount = 14;
+		attack.isCycler = false;
+		/*
+		 attack.topAnimation=getAnimationFromLevel(eatSprite,0,7);
+		 attack.leftAnimation=getAnimationFromLevel(eatSprite,1,7);
+		 attack.botAnimation=getAnimationFromLevel(eatSprite,2,7);
+		 attack.rightAnimation=getAnimationFromLevel(eatSprite,3,7);
+
+		 */
+
+		animStore.mRunAnimation=run;
+		animStore.mStandAnimation=stand;
+		animStore.mAtackAnimation=attack;
+		return animStore;
 	}
 	
 	public static AnimationStore getGolemAnimStore()
@@ -274,6 +365,7 @@ public class AnimationInitializer
 		run.topAnimation=getAnimationFromLevel(profTextures,0,4);
 		run.botAnimation=getAnimationFromLevel(profTextures,2,4);
 		*/
+		
 		TextureRegion[][] eatSprite=getRegion(new Texture(Gdx.files.internal("chicken_eat.png"))
 												 ,4,4,0);
 		AnimateComponent stay=getLpcComponent(profTextures,2);
@@ -363,6 +455,21 @@ public class AnimationInitializer
 		return animStore;
 	}
 	
+	public static TextureRegion[][] getRegion(TextureRegion[][] res,int lengh,int row,int startRow)
+	{
+		//TextureRegion[][] tmp=getTextureArray(res,coll,row);
+		TextureRegion[][] tresultarray=
+			new TextureRegion[lengh][row-startRow];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = startRow; j < row; j++) {
+				int iji=j-startRow;
+				tresultarray[i][iji] = res[i][j];
+			}
+        }
+		return tresultarray;
+	}
+	
 	public static TextureRegion[][] getRegion(Texture res,int coll,int row,int startColl)
 	{
 		TextureRegion[][] tmp=getTextureArray(res,coll,row);
@@ -396,9 +503,9 @@ public class AnimationInitializer
 		TextureRegion[] walkFrames;
 		walkFrames = new TextureRegion[size];
 
-        int index = 0;
+        //int index = 0;
         for (int i = 0; i < size; i++) 
-            walkFrames[index++] = tmp[lvl][i];
+            walkFrames[i] = tmp[lvl][i];
 
         Animation walkAnimation = new Animation(0.085f, walkFrames); // #11
 		return walkAnimation;

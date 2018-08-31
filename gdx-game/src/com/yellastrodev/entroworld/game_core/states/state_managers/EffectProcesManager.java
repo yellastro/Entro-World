@@ -63,7 +63,7 @@ public class EffectProcesManager extends iProcessManager
 	{
 		mAnimationNode = (EfAnimationNode)fNode;
 		mStatisComp=mEntity.mStatistic;
-		mCurrPoss=(PositionComp)mEntity.getComponent(PositionComp.class);
+		mCurrPoss=(PositionOnMapComponent)mEntity.getComponent(PositionOnMapComponent.class);
 		mVelosComp=(VelocityComp)mEntity.getComponent(VelocityComp.class);
 		mAnimationComponent=(EfAnimationComponent)mEntity.getComponent(EfAnimationComponent.class);
 		runAway();
@@ -93,8 +93,8 @@ public class EffectProcesManager extends iProcessManager
 
 	public void GetTarget(EnEntity fTarget)
 	{
-		mTargetPoss=(PositionComp)fTarget
-			.getComponent(PositionComp.class);
+		mTargetPoss=(PositionOnMapComponent)fTarget
+			.getComponent(PositionOnMapComponent.class);
 		mTargetManager = fTarget.mProcessManager;
 		setActiveState(getRunSt());
 		isSearch=false;
@@ -107,7 +107,7 @@ public class EffectProcesManager extends iProcessManager
 		setActiveState(new RestState(this));
 	}
 
-	public void RunThere(PositionComp fTargetPos)
+	public void RunThere(PositionOnMapComponent fTargetPos)
 	{
 		mTargetPoss=fTargetPos;
 		//mTargetPoss.oX=MathUtils.random(-2.0f, 400.0f);
@@ -117,7 +117,7 @@ public class EffectProcesManager extends iProcessManager
 		//changeAnimateType("run");
 	}
 
-	public void WalkThere(PositionComp fTargetPos)
+	public void WalkThere(PositionOnMapComponent fTargetPos)
 	{
 		mTargetPoss=fTargetPos;
 		//mTargetPoss.oX=MathUtils.random(-2.0f, 400.0f);
@@ -148,14 +148,14 @@ public class EffectProcesManager extends iProcessManager
 
 	public void WalkAround()
 	{
-		mTargetPoss=PositionComp.setNewPos();
+		mTargetPoss=PositionOnMapComponent.setNewPos();
 
 		WalkThere(mTargetPoss);
 	}
 
 	public void runAway()
 	{
-		mTargetPoss=PositionComp.setNewPos();
+		mTargetPoss=PositionOnMapComponent.setNewPos();
 
 		RunThere(mTargetPoss);
 	}
@@ -175,7 +175,7 @@ public class EffectProcesManager extends iProcessManager
 			return true;
 		}
 
-		if(!mTargetPoss.equals(fAtacker.Components.get(PositionComp.class)))
+		if(!mTargetPoss.equals(fAtacker.Components.get(PositionOnMapComponent.class)))
 
 			if(fAtacker.mStatistic.mHP<mStatisComp.mHP*1.5)
 				GetTarget(fAtacker);

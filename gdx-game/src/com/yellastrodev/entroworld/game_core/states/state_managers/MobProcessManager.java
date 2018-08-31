@@ -25,7 +25,7 @@ public class MobProcessManager extends iProcessManager
 	{
 		mAnimationNode = (AnimationNode)fNode;
 		mStatisComp=mEntity.mStatistic;
-		mCurrPoss=(PositionComp)mEntity.getComponent(PositionComp.class);
+		mCurrPoss=(PositionOnMapComponent)mEntity.getComponent(PositionOnMapComponent.class);
 		mVelosComp=(VelocityComp)mEntity.getComponent(VelocityComp.class);
 		mAnimationComponent=(AnimateComponent)mEntity.getComponent(AnimateComponent.class);
 		setActiveState(getStandState());
@@ -97,15 +97,15 @@ public class MobProcessManager extends iProcessManager
 	@Override
 	public void GetTarget(EnEntity fEntity)
 	{
-		mTargetPoss=(PositionComp)fEntity
-			.getComponent(PositionComp.class);
+		mTargetPoss=(PositionOnMapComponent)fEntity
+			.getComponent(PositionOnMapComponent.class);
 		setActiveState(getAtackState
 					   (fEntity.mProcessManager));
 		isSearch=false;
 	}
 
 	@Override
-	public void RunThere(PositionComp fPos)
+	public void RunThere(PositionOnMapComponent fPos)
 	{
 		mTargetPoss=fPos;
 		setActiveState(
@@ -114,7 +114,7 @@ public class MobProcessManager extends iProcessManager
 	
 	public void runAway()
 	{
-		mTargetPoss=PositionComp.setNewPos();
+		mTargetPoss=PositionOnMapComponent.setNewPos();
 
 		RunThere(mTargetPoss);
 	}
@@ -125,7 +125,7 @@ public class MobProcessManager extends iProcessManager
 		setActiveState(getStandState());
 	}
 	
-	public void WalkThere(PositionComp fTargetPos)
+	public void WalkThere(PositionOnMapComponent fTargetPos)
 	{
 		mTargetPoss=fTargetPos;
 		setActiveState(
@@ -134,7 +134,7 @@ public class MobProcessManager extends iProcessManager
 
 	public void WalkAround()
 	{
-		mTargetPoss=PositionComp.setNewPos();
+		mTargetPoss=PositionOnMapComponent.setNewPos();
 
 		WalkThere(mTargetPoss);
 	}
@@ -165,7 +165,7 @@ public class MobProcessManager extends iProcessManager
 		}
 		
 		if(!(getActiveState().getClass()==AtackState.class)
-			&&!mTargetPoss.equals(fAtacker.Components.get(PositionComp.class)))
+			&&!mTargetPoss.equals(fAtacker.Components.get(PositionOnMapComponent.class)))
 
 			if(fAtacker.mStatistic.mHP<mStatisComp.mHP*6)
 				GetTarget(fAtacker);
